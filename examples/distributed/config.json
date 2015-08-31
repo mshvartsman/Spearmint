@@ -2,16 +2,15 @@
     "language"        : "PYTHON",
     "experiment-name" : "branin-distributed-example",
     "polling-time"    : 1,
+    "database" :{
+	"address": "frontend.cluster"
+ },
     "resources" : {
-        "my-machine" : {
-            "scheduler"         : "local",
-            "max-concurrent"    : 1,
-            "max-finished-jobs" : 100
-        },
         "cluster" : {
-            "scheduler"         : "SLURM",
+            "scheduler"         : "SGE",
             "max-concurrent"    : 3,
-            "max-finished-jobs" : 1000
+            "max-finished-jobs" : 1000,
+	    "environment-file" : "~/.conda/envs/spearmint/bin/activate spearmint"
         }
     },
     "tasks": {
@@ -19,7 +18,7 @@
             "type"       : "OBJECTIVE",
             "likelihood" : "NOISELESS",
             "main-file"  : "branin",
-            "resources"  : ["my-machine", "cluster"]
+            "resources"  : "cluster"
         }
     },
     "variables": {
